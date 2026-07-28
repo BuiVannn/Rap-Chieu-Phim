@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Bán vé tại quầy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quầy vé</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Bán vé</a>
+</header>
+<main>
+    <h1>Bán vé tại quầy — tìm suất chiếu</h1>
+    <div class="card">
+        <form method="get" th:action="@{/quay/ban-ve/tim-suat-chieu}">
+            <label>Tên phim</label>
+            <input type="text" name="tuKhoa" th:value="${tuKhoa}" placeholder="Nhập tên phim..."/>
+            <button class="btn" type="submit">Tìm suất chiếu</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr><th>Phim</th><th>Ngày</th><th>Giờ</th><th>Phòng</th><th>Giá</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${danhSachSuatChieu}">
+                <td th:text="${s.phim.tenPhim}"></td>
+                <td th:text="${s.ngayChieu}"></td>
+                <td th:text="${s.gioBatDau}"></td>
+                <td th:text="${s.phongChieu.tenPhong}"></td>
+                <td th:text="${#numbers.formatInteger(s.giaVeMacDinh,0,'POINT')} + ' đ'"></td>
+                <td><a class="btn" th:href="@{'/quay/ban-ve/suat-chieu/' + ${s.id} + '/ghe'}">Chọn ghế</a></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(danhSachSuatChieu)}">
+                <td colspan="6" class="muted">Không tìm thấy suất chiếu.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

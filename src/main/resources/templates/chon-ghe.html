@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chọn ghế</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <span class="muted" th:if="${kenh == 'quay'}">Kênh: Bán tại quầy</span>
+</header>
+<main>
+    <h1>Chọn ghế</h1>
+    <p class="muted">Ghế màu xanh còn trống, màu đỏ đã được giữ/bán.</p>
+    <form method="post" th:action="@{${actionXacNhan}}">
+        <input type="hidden" name="suatChieuId" th:value="${suatChieuId}"/>
+        <div class="card">
+            <div class="seat-grid">
+                <label th:each="g : ${danhSachGhe}"
+                       th:classappend="${g.trangThai == 'Trống'} ? 'seat trong' : 'seat ban'"
+                       class="seat">
+                    <span th:text="${g.soGhe}">A1</span><br/>
+                    <span class="muted" th:text="${#numbers.formatInteger(g.giaVe,0,'POINT')}">80.000</span>
+                    <input type="checkbox" name="gheIds" th:value="${g.gheId}"
+                           th:disabled="${g.trangThai != 'Trống'}"/>
+                </label>
+            </div>
+            <button class="btn" type="submit">Xác nhận chọn ghế</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

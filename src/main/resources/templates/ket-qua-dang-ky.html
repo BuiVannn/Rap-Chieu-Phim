@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Đăng ký thành công</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+</header>
+<main>
+    <h1 class="ok">Đăng ký thành công!</h1>
+    <div class="card">
+        <p>Xin chào <strong th:text="${khachHang.hoTen}"></strong>.</p>
+        <p>Mã thẻ thành viên: <strong th:text="${khachHang.theThanhVien.maThe}"></strong></p>
+        <p>Hạng: <span class="tag" th:text="${khachHang.hangThanhVien.tenHang}"></span></p>
+        <p>Ngày đăng ký: <span th:text="${khachHang.theThanhVien.ngayDangKy}"></span></p>
+        <a class="btn" th:href="@{/phim/tim-kiem}">Bắt đầu đặt vé</a>
+    </div>
+</main>
+</body>
+</html>

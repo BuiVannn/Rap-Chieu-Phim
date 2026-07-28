@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Thanh toán tại quầy</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quầy vé</span>
+    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Bán vé</a>
+</header>
+<main>
+    <h1>Thanh toán tại quầy</h1>
+
+    <div class="card">
+        <p>Số vé đang giữ: <strong th:text="${#lists.size(veIds)}"></strong></p>
+        <p>Tổng tiền: <strong th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'"></strong></p>
+        <p th:if="${daApDungUuDai}" class="ok">
+            Đã áp dụng ưu đãi cho thành viên <span th:text="${khachHang?.hoTen}"></span>.
+        </p>
+    </div>
+
+    <div class="card" th:unless="${daApDungUuDai}">
+        <h2>Tra cứu thẻ thành viên (tùy chọn)</h2>
+        <form method="get" th:action="@{/quay/ban-ve/tra-cuu-thanh-vien}">
+            <input type="hidden" name="tongTien" th:value="${tongTien}"/>
+            <input type="hidden" name="veIds" th:each="v : ${veIds}" th:value="${v}"/>
+            <label>Số điện thoại thành viên</label>
+            <input type="text" name="soDienThoai" placeholder="VD: 0900000001"/>
+            <button class="btn secondary" type="submit">Tra cứu</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Xác nhận thanh toán</h2>
+        <form method="post" th:action="@{/quay/ban-ve/thanh-toan}">
+            <input type="hidden" name="tongTien" th:value="${tongTien}"/>
+            <input type="hidden" name="veIds" th:each="v : ${veIds}" th:value="${v}"/>
+            <input type="hidden" name="soDienThoai" th:if="${soDienThoai}" th:value="${soDienThoai}"/>
+            <label>Hình thức thanh toán</label>
+            <select name="hinhThucThanhToan">
+                <option>Tiền mặt</option>
+                <option>Thẻ</option>
+                <option>Chuyển khoản</option>
+            </select>
+            <button class="btn" type="submit">Thanh toán & in hóa đơn</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

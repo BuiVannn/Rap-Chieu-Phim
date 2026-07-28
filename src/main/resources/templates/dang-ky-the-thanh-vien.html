@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Đăng ký thành viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+</header>
+<main>
+    <h1>Đăng ký thẻ thành viên</h1>
+    <p class="muted">Đăng ký tài khoản đồng thời là đăng ký thẻ thành viên (mặc định hạng "Thường").</p>
+    <div class="card">
+        <form method="post" th:action="@{/thanh-vien/dang-ky}">
+            <label>Họ tên</label>
+            <input type="text" name="hoTen" required/>
+            <label>Số điện thoại</label>
+            <input type="text" name="soDienThoai" required/>
+            <label>Email</label>
+            <input type="email" name="email" required/>
+            <label>Mật khẩu</label>
+            <input type="password" name="matKhau" required/>
+            <button class="btn" type="submit">Đăng ký</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

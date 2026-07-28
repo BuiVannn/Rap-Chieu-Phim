@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Khu quản lý</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/}">Trang khách hàng</a>
+    <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
+    <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
+</header>
+<main>
+    <h1>Trang chủ Nhân viên quản lý</h1>
+    <div class="card">
+        <p>
+            <a class="btn" th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu (tạo suất chiếu)</a>
+            <a class="btn secondary" th:href="@{/quan-ly/chot-doanh-thu}">Chốt kỳ doanh thu</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

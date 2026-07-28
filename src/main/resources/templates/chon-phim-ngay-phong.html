@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Lập lịch chiếu</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/quan-ly}">Khu quản lý</a>
+    <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
+</header>
+<main>
+    <h1>Lập lịch chiếu — chọn phim, ngày, phòng</h1>
+    <p th:if="${thongBao}" class="ok" th:text="${thongBao}"></p>
+
+    <div class="card">
+        <form method="get" th:action="@{/quan-ly/lap-lich-chieu/khung-gio}">
+            <label>Phim</label>
+            <select name="phimId">
+                <option th:each="p : ${danhSachPhim}" th:value="${p.id}" th:text="${p.tenPhim}"></option>
+            </select>
+            <label>ID phòng chiếu</label>
+            <input type="number" name="phongChieuId" value="1" min="1"/>
+            <label>Ngày chiếu</label>
+            <input type="date" name="ngayChieu"/>
+            <button class="btn" type="submit">Xem khung giờ trống</button>
+        </form>
+        <p class="muted" th:if="${#lists.isEmpty(danhSachPhim)}">Chưa có phim "Sắp chiếu"/"Đang chiếu".</p>
+    </div>
+</main>
+</body>
+</html>

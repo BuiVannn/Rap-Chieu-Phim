@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Thanh toán</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+</header>
+<main>
+    <h1>Thanh toán (đặt vé trực tuyến)</h1>
+
+    <div class="card">
+        <p>Số vé đang giữ: <strong th:text="${#lists.size(veIds)}">2</strong></p>
+        <p>Tổng tiền: <strong th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'">160.000 đ</strong></p>
+        <p th:if="${daApDungUuDai}" class="ok">Đã áp dụng ưu đãi thẻ <span th:text="${maThe}"></span>.</p>
+    </div>
+
+    <div class="card" th:unless="${daApDungUuDai}">
+        <h2>Áp dụng ưu đãi thành viên (tùy chọn)</h2>
+        <form method="post" th:action="@{/dat-ve/ap-dung-uu-dai}">
+            <input type="hidden" name="tongTien" th:value="${tongTien}"/>
+            <input type="hidden" name="veIds" th:each="v : ${veIds}" th:value="${v}"/>
+            <label>Mã thẻ thành viên</label>
+            <input type="text" name="maThe" placeholder="VD: TVABCD1234"/>
+            <button class="btn secondary" type="submit">Áp dụng ưu đãi</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Xác nhận thanh toán</h2>
+        <form method="post" th:action="@{/dat-ve/thanh-toan}">
+            <input type="hidden" name="tongTien" th:value="${tongTien}"/>
+            <input type="hidden" name="veIds" th:each="v : ${veIds}" th:value="${v}"/>
+            <label>Phương thức thanh toán</label>
+            <select name="phuongThuc">
+                <option>Thẻ tín dụng</option>
+                <option>Ví điện tử</option>
+                <option>Chuyển khoản</option>
+            </select>
+            <button class="btn" type="submit">Thanh toán ngay</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

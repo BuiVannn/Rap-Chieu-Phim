@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tra cứu thành viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quầy vé</span>
+    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Bán vé</a>
+</header>
+<main>
+    <h1>Thông tin thành viên</h1>
+    <div class="card">
+        <p>Họ tên: <strong th:text="${khachHang.hoTen}"></strong></p>
+        <p>SĐT: <span th:text="${khachHang.soDienThoai}"></span></p>
+        <p>Mã thẻ: <span th:text="${khachHang.theThanhVien.maThe}"></span></p>
+        <p>Hạng: <span class="tag" th:text="${khachHang.hangThanhVien.tenHang}"></span>
+           — ưu đãi <span th:text="${khachHang.hangThanhVien.phanTramUuDai}"></span>%</p>
+        <p>Tổng tiền hiện tại: <strong th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'"></strong></p>
+    </div>
+
+    <div class="card">
+        <form method="post" th:action="@{/quay/ban-ve/ap-dung-uu-dai}">
+            <input type="hidden" name="tongTien" th:value="${tongTien}"/>
+            <input type="hidden" name="soDienThoai" th:value="${khachHang.soDienThoai}"/>
+            <input type="hidden" name="veIds" th:each="v : ${veIds}" th:value="${v}"/>
+            <button class="btn" type="submit">Áp dụng ưu đãi & tiếp tục</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

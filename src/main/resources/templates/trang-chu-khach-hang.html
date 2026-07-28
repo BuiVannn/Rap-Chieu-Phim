@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Rạp chiếu phim</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <a th:href="@{/thanh-vien/dang-ky}">Đăng ký thành viên</a>
+    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Quầy vé</a>
+    <a th:href="@{/quan-ly}">Khu quản lý</a>
+</header>
+<main>
+    <h1>Hệ thống quản lý rạp chiếu phim</h1>
+    <div class="card">
+        <p>Chào mừng bạn. Chọn chức năng:</p>
+        <p>
+            <a class="btn" th:href="@{/phim/tim-kiem}">Tìm & đặt vé phim</a>
+            <a class="btn secondary" th:href="@{/thanh-vien/dang-ky}">Đăng ký thẻ thành viên</a>
+            <a class="btn secondary" th:href="@{/ve-cua-toi}">Hủy vé đã đặt</a>
+        </p>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Đã chốt kỳ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
+</header>
+<main>
+    <h1 class="ok">Đã chốt kỳ doanh thu #<span th:text="${kyId}"></span></h1>
+    <div class="card">
+        <p>Số tiền thực thu đã ghi nhận:
+           <strong th:text="${#numbers.formatInteger(soTienThucThu,0,'POINT')} + ' đ'"></strong></p>
+        <p class="muted">Các hóa đơn trong kỳ đã được gán vào kỳ này và không thể chỉnh sửa nữa.</p>
+        <a class="btn" th:href="@{/quan-ly/chot-doanh-thu}">Về danh sách kỳ</a>
+    </div>
+</main>
+</body>
+</html>

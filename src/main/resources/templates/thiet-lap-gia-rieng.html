@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Thiết lập giá riêng</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
+</header>
+<main>
+    <h1 class="ok">Đã tạo suất chiếu #<span th:text="${suatChieu.id}"></span></h1>
+    <div class="card">
+        <p>Phim: <strong th:text="${suatChieu.phim.tenPhim}"></strong></p>
+        <p>Ngày <span th:text="${suatChieu.ngayChieu}"></span>,
+           <span th:text="${suatChieu.gioBatDau}"></span> - <span th:text="${suatChieu.gioKetThuc}"></span>,
+           phòng <span th:text="${suatChieu.phongChieu.tenPhong}"></span></p>
+        <p>Giá mặc định: <span th:text="${#numbers.formatInteger(suatChieu.giaVeMacDinh,0,'POINT')} + ' đ'"></span></p>
+    </div>
+
+    <div class="card">
+        <h2>Thiết lập giá riêng theo loại ghế (tùy chọn)</h2>
+        <form method="post" th:action="@{/quan-ly/lap-lich-chieu/gia-rieng}">
+            <input type="hidden" name="suatChieuId" th:value="${suatChieu.id}"/>
+            <div th:each="i : ${#numbers.sequence(1,3)}">
+                <label th:text="'Loại ghế ' + ${i}"></label>
+                <input type="text" name="loaiGhe" placeholder="VD: VIP / Thường / Đôi"/>
+                <label>Giá (đ)</label>
+                <input type="number" name="giaVe" step="1000" min="0" placeholder="Bỏ trống nếu không dùng"/>
+            </div>
+            <button class="btn" type="submit">Lưu giá riêng & hoàn tất</button>
+        </form>
+        <form method="post" th:action="@{/quan-ly/lap-lich-chieu/gia-rieng}">
+            <input type="hidden" name="suatChieuId" th:value="${suatChieu.id}"/>
+            <button class="btn secondary" type="submit">Bỏ qua (dùng giá mặc định)</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

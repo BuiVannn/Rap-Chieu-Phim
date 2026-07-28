@@ -1,0 +1,33 @@
+# Chay ca ung dung + MySQL bang 1 lenh: docker compose up --build
+# Mo trinh duyet: http://localhost:8080
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: quan_ly_rap_chieu_phim
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-prootpass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/quan_ly_rap_chieu_phim?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: rootpass
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql_data:

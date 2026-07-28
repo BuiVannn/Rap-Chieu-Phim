@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Xác nhận hủy vé</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+</header>
+<main>
+    <h1>Xác nhận hủy vé #<span th:text="${ketQua.ve.id}"></span></h1>
+    <div class="card">
+        <p>Ghế: <strong th:text="${ketQua.ve.ghe.soGhe}"></strong></p>
+        <p>Suất chiếu: <span th:text="${ketQua.ve.suatChieu.ngayChieu} + ' ' + ${ketQua.ve.suatChieu.gioBatDau}"></span></p>
+        <p>Trạng thái vé: <span class="tag" th:text="${ketQua.ve.trangThai}"></span></p>
+
+        <div th:if="${ketQua.duocHuy}">
+            <p class="ok" th:text="${ketQua.lyDo}"></p>
+            <p>Số tiền hoàn dự kiến:
+               <strong th:text="${#numbers.formatInteger(ketQua.soTienHoanDuKien,0,'POINT')} + ' đ'"></strong></p>
+            <form method="post" th:action="@{'/ve-cua-toi/' + ${ketQua.ve.id} + '/huy'}">
+                <button class="btn" type="submit">Xác nhận hủy & hoàn tiền</button>
+            </form>
+        </div>
+        <div th:unless="${ketQua.duocHuy}">
+            <p class="err" th:text="${ketQua.lyDo}"></p>
+            <a class="btn secondary" th:href="@{/ve-cua-toi}">Quay lại</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

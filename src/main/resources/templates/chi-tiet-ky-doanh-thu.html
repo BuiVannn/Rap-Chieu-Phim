@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chi tiết kỳ doanh thu</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
+</header>
+<main>
+    <h1>Chi tiết kỳ doanh thu #<span th:text="${baoCao.kyId}"></span></h1>
+    <div class="card">
+        <p>Khoảng: <span th:text="${baoCao.ngayBatDau}"></span> → <span th:text="${baoCao.ngayKetThuc}"></span></p>
+        <p>Trạng thái: <span class="tag" th:text="${baoCao.trangThai}"></span></p>
+        <table>
+            <tr><th>Tổng số vé bán</th><td th:text="${baoCao.tongSoVe}"></td></tr>
+            <tr><th>Số hóa đơn</th><td th:text="${baoCao.soHoaDon}"></td></tr>
+            <tr><th>Doanh thu trực tuyến</th><td th:text="${#numbers.formatInteger(baoCao.doanhThuTrucTuyen,0,'POINT')} + ' đ'"></td></tr>
+            <tr><th>Doanh thu tại quầy</th><td th:text="${#numbers.formatInteger(baoCao.doanhThuTaiQuay,0,'POINT')} + ' đ'"></td></tr>
+            <tr><th>Tổng doanh thu (hệ thống)</th><td th:text="${#numbers.formatInteger(baoCao.tongDoanhThu,0,'POINT')} + ' đ'"></td></tr>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Đối chiếu & chốt kỳ</h2>
+        <form method="post" th:action="@{'/quan-ly/chot-doanh-thu/' + ${baoCao.kyId} + '/xac-nhan'}">
+            <label>Số tiền thực thu (đối chiếu thực tế)</label>
+            <input type="number" name="soTienThucThu" step="1000"
+                   th:value="${baoCao.tongDoanhThu}"/>
+            <label>ID nhân viên quản lý thực hiện chốt</label>
+            <input type="number" name="nhanVienQuanLyId" value="1" min="1"/>
+            <button class="btn" type="submit">Xác nhận chốt kỳ</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

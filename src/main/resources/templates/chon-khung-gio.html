@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chọn khung giờ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
+</header>
+<main>
+    <h1>Chọn khung giờ trống & đặt giá vé</h1>
+    <div class="card">
+        <p class="muted">
+            Phòng #<span th:text="${phongChieuId}"></span>,
+            ngày <span th:text="${ngayChieu}"></span>.
+        </p>
+        <form method="post" th:action="@{/quan-ly/lap-lich-chieu/tao}">
+            <input type="hidden" name="phimId" th:value="${phimId}"/>
+            <input type="hidden" name="phongChieuId" th:value="${phongChieuId}"/>
+            <input type="hidden" name="ngayChieu" th:value="${ngayChieu}"/>
+            <label>Giờ bắt đầu (khung giờ còn trống)</label>
+            <select name="gioBatDau">
+                <option th:each="gio : ${khungGioTrong}" th:value="${gio}" th:text="${gio}"></option>
+            </select>
+            <label>Giá vé mặc định (đ)</label>
+            <input type="number" name="giaVe" value="80000" step="1000" min="0"/>
+            <button class="btn" type="submit">Tạo suất chiếu</button>
+        </form>
+        <p class="muted" th:if="${#lists.isEmpty(khungGioTrong)}">Không còn khung giờ trống trong ngày này.</p>
+    </div>
+</main>
+</body>
+</html>

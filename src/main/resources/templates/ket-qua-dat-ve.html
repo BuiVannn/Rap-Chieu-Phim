@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Đặt vé thành công</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+</header>
+<main>
+    <h1 class="ok">Đặt vé thành công!</h1>
+    <div class="card">
+        <p>Mã hóa đơn: <strong th:text="'#' + ${hoaDon.id}">#1</strong></p>
+        <p>Hình thức bán: <span th:text="${hoaDon.hinhThucBan}">Trực tuyến</span></p>
+        <p>Tổng tiền: <strong th:text="${#numbers.formatInteger(hoaDon.tongTien,0,'POINT')} + ' đ'"></strong></p>
+        <p class="muted">Vé điện tử đã được gửi tới email (mô phỏng). Xem log server để kiểm tra.</p>
+
+        <h2>Danh sách vé</h2>
+        <table>
+            <thead><tr><th>Mã vé</th><th>Ghế</th><th>Mã QR</th><th>Giá</th></tr></thead>
+            <tbody>
+            <tr th:each="v : ${hoaDon.danhSachVe}">
+                <td th:text="'#' + ${v.id}"></td>
+                <td th:text="${v.ghe.soGhe}"></td>
+                <td th:text="${v.maQR}"></td>
+                <td th:text="${#numbers.formatInteger(v.giaVeApDung,0,'POINT')} + ' đ'"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="btn" th:href="@{/phim/tim-kiem}">Đặt vé khác</a>
+    </div>
+</main>
+</body>
+</html>

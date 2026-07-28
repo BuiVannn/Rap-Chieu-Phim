@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${chiTiet.phim.tenPhim}">Chi tiết phim</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+</header>
+<main>
+    <h1 th:text="${chiTiet.phim.tenPhim}">Tên phim</h1>
+    <div class="card">
+        <p><strong>Thể loại:</strong> <span th:text="${chiTiet.phim.theLoai}"></span></p>
+        <p><strong>Thời lượng:</strong> <span th:text="${chiTiet.phim.thoiLuong} + ' phút'"></span></p>
+        <p><strong>Đạo diễn:</strong> <span th:text="${chiTiet.phim.daoDien}"></span></p>
+        <p><strong>Diễn viên:</strong> <span th:text="${chiTiet.phim.dienVien}"></span></p>
+        <p><strong>Khởi chiếu:</strong> <span th:text="${chiTiet.phim.ngayKhoiChieu}"></span></p>
+        <p th:text="${chiTiet.phim.moTa}" class="muted"></p>
+    </div>
+
+    <h2>Suất chiếu</h2>
+    <div class="card">
+        <table>
+            <thead>
+            <tr><th>Ngày</th><th>Giờ</th><th>Phòng</th><th>Giá vé</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="s : ${chiTiet.danhSachSuatChieu}">
+                <td th:text="${s.ngayChieu}">2026-07-30</td>
+                <td th:text="${s.gioBatDau}">19:00</td>
+                <td th:text="${s.phongChieu.tenPhong}">Phòng 1</td>
+                <td th:text="${#numbers.formatInteger(s.giaVeMacDinh,0,'POINT')} + ' đ'">80.000 đ</td>
+                <td><a class="btn" th:href="@{'/dat-ve/suat-chieu/' + ${s.id} + '/ghe'}">Đặt vé</a></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(chiTiet.danhSachSuatChieu)}">
+                <td colspan="5" class="muted">Chưa có suất chiếu.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

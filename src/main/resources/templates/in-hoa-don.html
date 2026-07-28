@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hóa đơn</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini — Quầy vé</span>
+    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Bán vé</a>
+</header>
+<main>
+    <h1>Hóa đơn #<span th:text="${hoaDon.id}"></span></h1>
+    <div class="card">
+        <p>Ngày lập: <span th:text="${#temporals.format(hoaDon.ngayLap, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p>Hình thức bán: <span th:text="${hoaDon.hinhThucBan}"></span></p>
+        <p>Hình thức thanh toán: <span th:text="${hoaDon.hinhThucThanhToan}"></span></p>
+        <p th:if="${hoaDon.khachHang != null}">Khách hàng:
+            <span th:text="${hoaDon.khachHang.hoTen}"></span></p>
+
+        <h2>Chi tiết vé</h2>
+        <table>
+            <thead><tr><th>Ghế</th><th>Suất chiếu</th><th>Giá</th></tr></thead>
+            <tbody>
+            <tr th:each="v : ${hoaDon.danhSachVe}">
+                <td th:text="${v.ghe.soGhe}"></td>
+                <td th:text="${v.suatChieu.ngayChieu} + ' ' + ${v.suatChieu.gioBatDau}"></td>
+                <td th:text="${#numbers.formatInteger(v.giaVeApDung,0,'POINT')} + ' đ'"></td>
+            </tr>
+            </tbody>
+        </table>
+        <h2>Tổng cộng: <span th:text="${#numbers.formatInteger(hoaDon.tongTien,0,'POINT')} + ' đ'"></span></h2>
+        <a class="btn" th:href="@{/quay/ban-ve/tim-suat-chieu}">Bán vé tiếp</a>
+    </div>
+</main>
+</body>
+</html>

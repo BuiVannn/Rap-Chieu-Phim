@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Danh sách phim</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+</header>
+<main>
+    <h1>Tìm kiếm phim</h1>
+    <div class="card">
+        <form method="get" th:action="@{/phim/tim-kiem}">
+            <label>Từ khóa tên phim</label>
+            <input type="text" name="tuKhoa" th:value="${tuKhoa}" placeholder="Nhập tên phim..."/>
+            <button class="btn" type="submit">Tìm</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr><th>Tên phim</th><th>Thể loại</th><th>Thời lượng</th><th>Trạng thái</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${danhSachPhim}">
+                <td th:text="${p.tenPhim}">Phim</td>
+                <td th:text="${p.theLoai}">Thể loại</td>
+                <td th:text="${p.thoiLuong} + ' phút'">120 phút</td>
+                <td><span class="tag" th:text="${p.trangThai}">Đang chiếu</span></td>
+                <td><a class="btn" th:href="@{'/phim/' + ${p.id}}">Chi tiết</a></td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(danhSachPhim)}">
+                <td colspan="5" class="muted">Không có phim nào khớp.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Vé của tôi</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 CGV Mini</span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+</header>
+<main>
+    <h1>Hủy vé đã đặt</h1>
+    <div class="card">
+        <p class="muted">Nhập mã vé (in trên vé điện tử / hóa đơn) để kiểm tra điều kiện hủy.</p>
+        <form method="get" th:action="@{/ve-cua-toi}">
+            <label>Mã vé</label>
+            <input type="number" name="veId" min="1" placeholder="VD: 1"/>
+            <button class="btn" type="submit">Kiểm tra</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>
