@@ -2,29 +2,55 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Rạp chiếu phim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>CineHub — Đặt vé xem phim</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
     <a th:href="@{/phim/tim-kiem}">Phim</a>
     <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
-    <a th:href="@{/thanh-vien/dang-ky}">Đăng ký thành viên</a>
+    <a th:href="@{/thanh-vien/dang-ky}">Thành viên</a>
+    <span class="spacer"></span>
     <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Quầy vé</a>
-    <a th:href="@{/quan-ly}">Khu quản lý</a>
+    <a th:href="@{/quan-ly}">Quản lý</a>
 </header>
 <main>
-    <h1>Hệ thống quản lý rạp chiếu phim</h1>
-    <div class="card">
-        <p>Chào mừng bạn. Chọn chức năng:</p>
-        <p>
-            <a class="btn" th:href="@{/phim/tim-kiem}">Tìm & đặt vé phim</a>
-            <a class="btn secondary" th:href="@{/thanh-vien/dang-ky}">Đăng ký thẻ thành viên</a>
-            <a class="btn secondary" th:href="@{/ve-cua-toi}">Hủy vé đã đặt</a>
-        </p>
+    <section class="hero">
+        <h1>Đặt vé xem phim chỉ trong vài bước 🍿</h1>
+        <p>Chọn phim đang chiếu, giữ ghế yêu thích và thanh toán trực tuyến. Đăng ký thẻ thành viên
+           để nhận ưu đãi theo hạng.</p>
+        <div class="actions">
+            <a class="btn" th:href="@{/phim/tim-kiem}">🎟️ Đặt vé ngay</a>
+            <a class="btn secondary" th:href="@{/thanh-vien/dang-ky}">Đăng ký thành viên</a>
+        </div>
+    </section>
+
+    <div class="grid-features">
+        <a class="card feature" th:href="@{/phim/tim-kiem}">
+            <div class="ico">🔍</div>
+            <h3>Tìm & đặt vé</h3>
+            <p>Duyệt phim đang chiếu, xem suất chiếu và chọn ghế theo sơ đồ.</p>
+        </a>
+        <a class="card feature" th:href="@{/ve-cua-toi}">
+            <div class="ico">↩️</div>
+            <h3>Hủy vé</h3>
+            <p>Kiểm tra điều kiện và hủy vé đã đặt, hoàn tiền tự động.</p>
+        </a>
+        <a class="card feature" th:href="@{/thanh-vien/dang-ky}">
+            <div class="ico">💳</div>
+            <h3>Thẻ thành viên</h3>
+            <p>Đăng ký tài khoản kèm thẻ thành viên, hưởng ưu đãi theo hạng.</p>
+        </a>
+        <a class="card feature" th:href="@{/quay/ban-ve/tim-suat-chieu}">
+            <div class="ico">🏪</div>
+            <h3>Bán vé tại quầy</h3>
+            <p>Dành cho nhân viên: bán vé nhanh cho khách tại rạp.</p>
+        </a>
     </div>
 </main>
+<footer>CineHub · Đồ án Phân tích thiết kế HTTT — Hệ thống quản lý rạp chiếu phim</footer>
 </body>
 </html>

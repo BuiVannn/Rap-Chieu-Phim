@@ -13,7 +13,7 @@
 </header>
 <main>
     <h1>Danh sách kỳ doanh thu chưa chốt</h1>
-    <div class="card">
+    <div class="table-wrap">
         <table>
             <thead>
             <tr><th>Kỳ</th><th>Từ ngày</th><th>Đến ngày</th><th>Trạng thái</th><th></th></tr>
@@ -23,8 +23,8 @@
                 <td th:text="'#' + ${k.id}"></td>
                 <td th:text="${k.ngayBatDau}"></td>
                 <td th:text="${k.ngayKetThuc}"></td>
-                <td><span class="tag" th:text="${k.trangThai}"></span></td>
-                <td><a class="btn" th:href="@{'/quan-ly/chot-doanh-thu/' + ${k.id}}">Xem & chốt</a></td>
+                <td><span class="badge amber" th:text="${k.trangThai}"></span></td>
+                <td><a class="btn" th:href="@{'/quan-ly/chot-doanh-thu/' + ${k.id}}">Xem &amp; chốt</a></td>
             </tr>
             <tr th:if="${#lists.isEmpty(danhSachKy)}">
                 <td colspan="5" class="muted">Không có kỳ nào đang chờ chốt.</td>

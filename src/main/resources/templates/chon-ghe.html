@@ -2,34 +2,47 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Chọn ghế</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Chọn ghế — CineHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
-    <span class="muted" th:if="${kenh == 'quay'}">Kênh: Bán tại quầy</span>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+    <span class="spacer"></span>
+    <span class="badge gold" th:if="${kenh == 'quay'}">Kênh: Bán tại quầy</span>
+    <span class="badge blue" th:if="${kenh == 'online'}">Kênh: Trực tuyến</span>
 </header>
 <main>
     <h1>Chọn ghế</h1>
-    <p class="muted">Ghế màu xanh còn trống, màu đỏ đã được giữ/bán.</p>
+    <p class="subtitle">Nhấn vào ghế còn trống để chọn, ghế được chọn sẽ chuyển màu vàng.</p>
+
     <form method="post" th:action="@{${actionXacNhan}}">
         <input type="hidden" name="suatChieuId" th:value="${suatChieuId}"/>
         <div class="card">
+            <div class="screen">Màn hình</div>
+            <div class="legend">
+                <span><i class="swatch free"></i> Trống</span>
+                <span><i class="swatch sel"></i> Đang chọn</span>
+                <span><i class="swatch taken"></i> Đã giữ / đã bán</span>
+            </div>
+
             <div class="seat-grid">
                 <label th:each="g : ${danhSachGhe}"
-                       th:classappend="${g.trangThai == 'Trống'} ? 'seat trong' : 'seat ban'"
-                       class="seat">
-                    <span th:text="${g.soGhe}">A1</span><br/>
-                    <span class="muted" th:text="${#numbers.formatInteger(g.giaVe,0,'POINT')}">80.000</span>
+                       th:classappend="${g.trangThai == 'Trống'} ? 'seat trong' : 'seat ban'">
+                    <span class="sn" th:text="${g.soGhe}">A1</span>
+                    <span class="pr" th:text="${#numbers.formatInteger(g.giaVe,0,'POINT')}">80.000</span>
                     <input type="checkbox" name="gheIds" th:value="${g.gheId}"
                            th:disabled="${g.trangThai != 'Trống'}"/>
                 </label>
             </div>
-            <button class="btn" type="submit">Xác nhận chọn ghế</button>
+
+            <button class="btn block" type="submit">Xác nhận chọn ghế →</button>
         </div>
     </form>
 </main>
+<footer>CineHub · Đặt vé xem phim</footer>
 </body>
 </html>

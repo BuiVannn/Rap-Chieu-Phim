@@ -2,24 +2,36 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Khu quản lý</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>CineHub — Khu quản lý</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span> · Quản lý</span>
     <a th:href="@{/}">Trang khách hàng</a>
+    <span class="spacer"></span>
     <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
     <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
 </header>
 <main>
-    <h1>Trang chủ Nhân viên quản lý</h1>
-    <div class="card">
-        <p>
-            <a class="btn" th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu (tạo suất chiếu)</a>
-            <a class="btn secondary" th:href="@{/quan-ly/chot-doanh-thu}">Chốt kỳ doanh thu</a>
-        </p>
+    <section class="hero">
+        <h1>Bảng điều khiển quản lý 🎬</h1>
+        <p>Quản lý lịch chiếu và chốt doanh thu định kỳ của rạp.</p>
+    </section>
+    <div class="grid-features">
+        <a class="card feature" th:href="@{/quan-ly/lap-lich-chieu}">
+            <div class="ico">🗓️</div>
+            <h3>Lập lịch chiếu</h3>
+            <p>Tạo suất chiếu mới, kiểm tra trùng lịch, thiết lập giá vé.</p>
+        </a>
+        <a class="card feature" th:href="@{/quan-ly/chot-doanh-thu}">
+            <div class="ico">📊</div>
+            <h3>Chốt doanh thu</h3>
+            <p>Tổng hợp doanh thu theo kỳ, đối chiếu và chốt sổ.</p>
+        </a>
     </div>
 </main>
+<footer>CineHub · Khu quản lý</footer>
 </body>
 </html>

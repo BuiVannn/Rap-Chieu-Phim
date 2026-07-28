@@ -2,39 +2,49 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Chi tiết kỳ doanh thu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Chi tiết kỳ doanh thu — CineHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini — Quản lý</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span> · Quản lý</span>
+    <a th:href="@{/quan-ly}">Khu quản lý</a>
+    <span class="spacer"></span>
     <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
 </header>
 <main>
-    <h1>Chi tiết kỳ doanh thu #<span th:text="${baoCao.kyId}"></span></h1>
-    <div class="card">
-        <p>Khoảng: <span th:text="${baoCao.ngayBatDau}"></span> → <span th:text="${baoCao.ngayKetThuc}"></span></p>
-        <p>Trạng thái: <span class="tag" th:text="${baoCao.trangThai}"></span></p>
-        <table>
-            <tr><th>Tổng số vé bán</th><td th:text="${baoCao.tongSoVe}"></td></tr>
-            <tr><th>Số hóa đơn</th><td th:text="${baoCao.soHoaDon}"></td></tr>
-            <tr><th>Doanh thu trực tuyến</th><td th:text="${#numbers.formatInteger(baoCao.doanhThuTrucTuyen,0,'POINT')} + ' đ'"></td></tr>
-            <tr><th>Doanh thu tại quầy</th><td th:text="${#numbers.formatInteger(baoCao.doanhThuTaiQuay,0,'POINT')} + ' đ'"></td></tr>
-            <tr><th>Tổng doanh thu (hệ thống)</th><td th:text="${#numbers.formatInteger(baoCao.tongDoanhThu,0,'POINT')} + ' đ'"></td></tr>
-        </table>
+    <h1>Kỳ doanh thu #<span th:text="${baoCao.kyId}"></span></h1>
+    <p class="subtitle">
+        <span th:text="${baoCao.ngayBatDau}"></span> → <span th:text="${baoCao.ngayKetThuc}"></span>
+        &nbsp;<span class="badge" th:classappend="${baoCao.trangThai == 'Đã chốt'} ? 'green' : 'amber'"
+                   th:text="${baoCao.trangThai}"></span>
+    </p>
+
+    <div class="stat-row">
+        <div class="stat"><div class="k">Tổng vé bán</div><div class="v" th:text="${baoCao.tongSoVe}">0</div></div>
+        <div class="stat"><div class="k">Số hóa đơn</div><div class="v" th:text="${baoCao.soHoaDon}">0</div></div>
+        <div class="stat"><div class="k">Tổng doanh thu</div>
+            <div class="v" style="color:var(--gold)" th:text="${#numbers.formatInteger(baoCao.tongDoanhThu,0,'POINT')} + ' đ'">0 đ</div></div>
+    </div>
+    <div class="stat-row" style="margin-top:14px">
+        <div class="stat"><div class="k">Doanh thu trực tuyến</div>
+            <div class="v" style="font-size:18px" th:text="${#numbers.formatInteger(baoCao.doanhThuTrucTuyen,0,'POINT')} + ' đ'">0 đ</div></div>
+        <div class="stat"><div class="k">Doanh thu tại quầy</div>
+            <div class="v" style="font-size:18px" th:text="${#numbers.formatInteger(baoCao.doanhThuTaiQuay,0,'POINT')} + ' đ'">0 đ</div></div>
     </div>
 
-    <div class="card">
-        <h2>Đối chiếu & chốt kỳ</h2>
+    <div class="card" style="margin-top:18px">
+        <h2 style="margin-top:0">Đối chiếu & chốt kỳ</h2>
         <form method="post" th:action="@{'/quan-ly/chot-doanh-thu/' + ${baoCao.kyId} + '/xac-nhan'}">
             <label>Số tiền thực thu (đối chiếu thực tế)</label>
-            <input type="number" name="soTienThucThu" step="1000"
-                   th:value="${baoCao.tongDoanhThu}"/>
+            <input type="number" name="soTienThucThu" step="1000" th:value="${baoCao.tongDoanhThu}"/>
             <label>ID nhân viên quản lý thực hiện chốt</label>
             <input type="number" name="nhanVienQuanLyId" value="1" min="1"/>
-            <button class="btn" type="submit">Xác nhận chốt kỳ</button>
+            <button class="btn" type="submit" style="margin-top:16px">Xác nhận chốt kỳ</button>
         </form>
     </div>
 </main>
+<footer>CineHub · Khu quản lý</footer>
 </body>
 </html>

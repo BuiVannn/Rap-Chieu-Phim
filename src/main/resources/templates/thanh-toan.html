@@ -14,9 +14,9 @@
     <h1>Thanh toán (đặt vé trực tuyến)</h1>
 
     <div class="card">
-        <p>Số vé đang giữ: <strong th:text="${#lists.size(veIds)}">2</strong></p>
-        <p>Tổng tiền: <strong th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'">160.000 đ</strong></p>
-        <p th:if="${daApDungUuDai}" class="ok">Đã áp dụng ưu đãi thẻ <span th:text="${maThe}"></span>.</p>
+        <p class="muted">Số vé đang giữ: <strong th:text="${#lists.size(veIds)}">2</strong></p>
+        <div class="big-amount" th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'">160.000 đ</div>
+        <p th:if="${daApDungUuDai}" class="ok">✓ Đã áp dụng ưu đãi thẻ <span th:text="${maThe}"></span>.</p>
     </div>
 
     <div class="card" th:unless="${daApDungUuDai}">

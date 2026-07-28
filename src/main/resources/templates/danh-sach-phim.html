@@ -2,44 +2,50 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Danh sách phim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Phim đang chiếu — CineHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
     <a th:href="@{/phim/tim-kiem}">Phim</a>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <span class="spacer"></span>
+    <a th:href="@{/thanh-vien/dang-ky}">Thành viên</a>
 </header>
 <main>
-    <h1>Tìm kiếm phim</h1>
+    <h1>Phim</h1>
+    <p class="subtitle">Tìm phim và đặt vé theo suất chiếu.</p>
+
     <div class="card">
-        <form method="get" th:action="@{/phim/tim-kiem}">
-            <label>Từ khóa tên phim</label>
-            <input type="text" name="tuKhoa" th:value="${tuKhoa}" placeholder="Nhập tên phim..."/>
-            <button class="btn" type="submit">Tìm</button>
+        <form method="get" th:action="@{/phim/tim-kiem}" class="inline-form">
+            <div class="grow">
+                <label>Từ khóa tên phim</label>
+                <input type="text" name="tuKhoa" th:value="${tuKhoa}" placeholder="VD: Vũ Trụ, Bí Ẩn..."/>
+            </div>
+            <button class="btn" type="submit">🔍 Tìm</button>
         </form>
     </div>
 
-    <div class="card">
-        <table>
-            <thead>
-            <tr><th>Tên phim</th><th>Thể loại</th><th>Thời lượng</th><th>Trạng thái</th><th></th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="p : ${danhSachPhim}">
-                <td th:text="${p.tenPhim}">Phim</td>
-                <td th:text="${p.theLoai}">Thể loại</td>
-                <td th:text="${p.thoiLuong} + ' phút'">120 phút</td>
-                <td><span class="tag" th:text="${p.trangThai}">Đang chiếu</span></td>
-                <td><a class="btn" th:href="@{'/phim/' + ${p.id}}">Chi tiết</a></td>
-            </tr>
-            <tr th:if="${#lists.isEmpty(danhSachPhim)}">
-                <td colspan="5" class="muted">Không có phim nào khớp.</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="movie-grid">
+        <div class="movie" th:each="p : ${danhSachPhim}">
+            <div class="poster">🎞️</div>
+            <div class="body">
+                <h3 th:text="${p.tenPhim}">Tên phim</h3>
+                <span class="badge"
+                      th:classappend="${p.trangThai == 'Đang chiếu'} ? 'green' : (${p.trangThai == 'Sắp chiếu'} ? 'amber' : 'red')"
+                      th:text="${p.trangThai}">Đang chiếu</span>
+                <div class="meta" th:text="${p.theLoai} + ' · ' + ${p.thoiLuong} + ' phút'">Thể loại · 120 phút</div>
+                <a class="btn secondary" th:href="@{'/phim/' + ${p.id}}">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+    <div class="card" th:if="${#lists.isEmpty(danhSachPhim)}">
+        <p class="muted">Không có phim nào khớp từ khóa.</p>
     </div>
 </main>
+<footer>CineHub · Đặt vé xem phim</footer>
 </body>
 </html>

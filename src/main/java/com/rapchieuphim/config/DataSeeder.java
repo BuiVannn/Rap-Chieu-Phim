@@ -98,10 +98,10 @@ public class DataSeeder implements CommandLineRunner {
         PhongChieu phong1 = luuPhong("Phòng 1", "2D");
         PhongChieu phong2 = luuPhong("Phòng 2", "3D");
 
-        // 6. Suat chieu (hom nay & ngay mai)
-        luuSuat(p1, phong1, LocalDate.now(), LocalTime.of(19, 0), 80000);
-        luuSuat(p1, phong2, LocalDate.now(), LocalTime.of(20, 30), 90000);
-        luuSuat(p2, phong1, LocalDate.now().plusDays(1), LocalTime.of(18, 0), 75000);
+        // 6. Suat chieu (dat o tuong lai de luon con dat ve duoc khi demo)
+        luuSuat(p1, phong1, LocalDate.now().plusDays(1), LocalTime.of(19, 0), 80000);
+        luuSuat(p1, phong2, LocalDate.now().plusDays(1), LocalTime.of(21, 0), 90000);
+        luuSuat(p2, phong1, LocalDate.now().plusDays(2), LocalTime.of(18, 0), 75000);
 
         // 7. Ky doanh thu thang hien tai (chua chot)
         LocalDate dauThang = LocalDate.now().withDayOfMonth(1);

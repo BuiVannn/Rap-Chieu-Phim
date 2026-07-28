@@ -10,6 +10,7 @@ import com.rapchieuphim.dto.TrangThaiGheDTO;
 import com.rapchieuphim.entity.*;
 import com.rapchieuphim.exception.GheKhongCoSanException;
 import com.rapchieuphim.exception.KhongTimThayException;
+import com.rapchieuphim.exception.SuatChieuDaQuaException;
 import com.rapchieuphim.exception.ThanhToanThatBaiException;
 import com.rapchieuphim.exception.ThongTinTrungException;
 import com.rapchieuphim.repository.*;
@@ -117,6 +118,7 @@ public class KhachHangService {
     public double giuGheTamThoi(Long suatChieuId, List<Long> gheIds) {
         SuatChieu suatChieu = suatChieuRepository.findById(suatChieuId)
                 .orElseThrow(() -> new KhongTimThayException("Khong tim thay suat chieu id=" + suatChieuId));
+        kiemTraSuatChuaChieu(suatChieu);
 
         List<Ve> veHienCo = veRepository.findBySuatChieuId(suatChieuId);
         for (Ve ve : veHienCo) {
@@ -174,6 +176,11 @@ public class KhachHangService {
 
         List<Ve> ves = veRepository.findAllById(veIds);
         for (Ve ve : ves) {
+            // Chi ban duoc ve dang o trang thai "Dang giu" (tranh ban lai ve da huy/da ban)
+            if (!"Đang giữ".equals(ve.getTrangThai())) {
+                throw new GheKhongCoSanException("Ve ghe " + ve.getGhe().getSoGhe()
+                        + " khong con o trang thai giu, khong the thanh toan.");
+            }
             ve.setTrangThai("Đã bán");
             ve.setMaQR(sinhMaQR());
             ve.setHoaDon(hoaDon);
@@ -262,6 +269,14 @@ public class KhachHangService {
     /**
      * Gia ve cua 1 ghe = gia rieng theo loai ghe cua suat chieu (neu co cau hinh), nguoc lai la gia mac dinh.
      */
+    /** Khong cho giu/dat ghe neu suat chieu da bat dau. */
+    private void kiemTraSuatChuaChieu(SuatChieu suatChieu) {
+        LocalDateTime gioChieu = LocalDateTime.of(suatChieu.getNgayChieu(), suatChieu.getGioBatDau());
+        if (gioChieu.isBefore(LocalDateTime.now())) {
+            throw new SuatChieuDaQuaException("Suat chieu da bat dau, khong the dat ve.");
+        }
+    }
+
     private double tinhGiaVe(SuatChieu suatChieu, Ghe ghe) {
         if (suatChieu.getDanhSachGiaTheoLoaiGhe() != null) {
             for (GiaVeTheoLoaiGhe gia : suatChieu.getDanhSachGiaTheoLoaiGhe()) {

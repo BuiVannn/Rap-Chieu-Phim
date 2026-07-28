@@ -4,6 +4,7 @@ import com.rapchieuphim.dto.TrangThaiGheDTO;
 import com.rapchieuphim.entity.*;
 import com.rapchieuphim.exception.GheKhongCoSanException;
 import com.rapchieuphim.exception.KhongTimThayException;
+import com.rapchieuphim.exception.SuatChieuDaQuaException;
 import com.rapchieuphim.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,6 +91,7 @@ public class NhanVienBanHangService {
     public double giuGheTamThoi(Long suatChieuId, List<Long> gheIds) {
         SuatChieu suatChieu = suatChieuRepository.findById(suatChieuId)
                 .orElseThrow(() -> new KhongTimThayException("Khong tim thay suat chieu id=" + suatChieuId));
+        kiemTraSuatChuaChieu(suatChieu);
 
         List<Ve> veHienCo = veRepository.findBySuatChieuId(suatChieuId);
         for (Ve ve : veHienCo) {
@@ -141,6 +143,10 @@ public class NhanVienBanHangService {
 
         List<Ve> ves = veRepository.findAllById(veIds);
         for (Ve ve : ves) {
+            if (!"Đang giữ".equals(ve.getTrangThai())) {
+                throw new GheKhongCoSanException("Ve ghe " + ve.getGhe().getSoGhe()
+                        + " khong con o trang thai giu, khong the thanh toan.");
+            }
             ve.setTrangThai("Đã bán");
             ve.setMaQR(sinhMaQR());
             ve.setHoaDon(hoaDon);
@@ -160,6 +166,13 @@ public class NhanVienBanHangService {
     }
 
     // ===== Ho tro =====
+
+    private void kiemTraSuatChuaChieu(SuatChieu suatChieu) {
+        LocalDateTime gioChieu = LocalDateTime.of(suatChieu.getNgayChieu(), suatChieu.getGioBatDau());
+        if (gioChieu.isBefore(LocalDateTime.now())) {
+            throw new SuatChieuDaQuaException("Suat chieu da bat dau, khong the ban ve.");
+        }
+    }
 
     private double tinhGiaVe(SuatChieu suatChieu, Ghe ghe) {
         if (suatChieu.getDanhSachGiaTheoLoaiGhe() != null) {

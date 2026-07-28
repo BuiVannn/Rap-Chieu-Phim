@@ -18,7 +18,8 @@ public class GlobalExceptionHandler {
             HuyVeQuaHanException.class,
             ThongTinTrungException.class,
             KyDaChotException.class,
-            ThanhToanThatBaiException.class
+            ThanhToanThatBaiException.class,
+            SuatChieuDaQuaException.class
     })
     public String xuLyLoiNghiepVu(RuntimeException ex, Model model) {
         model.addAttribute("thongBaoLoi", ex.getMessage());

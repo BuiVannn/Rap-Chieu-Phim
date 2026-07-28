@@ -2,28 +2,39 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title th:text="${chiTiet.phim.tenPhim}">Chi tiết phim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title th:text="${chiTiet.phim.tenPhim} + ' — CineHub'">Chi tiết phim</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
     <a th:href="@{/phim/tim-kiem}">Phim</a>
+    <span class="spacer"></span>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
 </header>
 <main>
     <h1 th:text="${chiTiet.phim.tenPhim}">Tên phim</h1>
+    <p>
+        <span class="badge"
+              th:classappend="${chiTiet.phim.trangThai == 'Đang chiếu'} ? 'green' : (${chiTiet.phim.trangThai == 'Sắp chiếu'} ? 'amber' : 'red')"
+              th:text="${chiTiet.phim.trangThai}">Đang chiếu</span>
+    </p>
+
     <div class="card">
-        <p><strong>Thể loại:</strong> <span th:text="${chiTiet.phim.theLoai}"></span></p>
-        <p><strong>Thời lượng:</strong> <span th:text="${chiTiet.phim.thoiLuong} + ' phút'"></span></p>
-        <p><strong>Đạo diễn:</strong> <span th:text="${chiTiet.phim.daoDien}"></span></p>
+        <div class="stat-row">
+            <div class="stat"><div class="k">Thể loại</div><div class="v" style="font-size:15px" th:text="${chiTiet.phim.theLoai}"></div></div>
+            <div class="stat"><div class="k">Thời lượng</div><div class="v" style="font-size:15px" th:text="${chiTiet.phim.thoiLuong} + ' phút'"></div></div>
+            <div class="stat"><div class="k">Khởi chiếu</div><div class="v" style="font-size:15px" th:text="${chiTiet.phim.ngayKhoiChieu}"></div></div>
+        </div>
+        <p style="margin-top:16px"><strong>Đạo diễn:</strong> <span th:text="${chiTiet.phim.daoDien}"></span></p>
         <p><strong>Diễn viên:</strong> <span th:text="${chiTiet.phim.dienVien}"></span></p>
-        <p><strong>Khởi chiếu:</strong> <span th:text="${chiTiet.phim.ngayKhoiChieu}"></span></p>
-        <p th:text="${chiTiet.phim.moTa}" class="muted"></p>
+        <p class="muted" th:text="${chiTiet.phim.moTa}"></p>
     </div>
 
-    <h2>Suất chiếu</h2>
-    <div class="card">
+    <h2>Lịch chiếu</h2>
+    <div class="table-wrap">
         <table>
             <thead>
             <tr><th>Ngày</th><th>Giờ</th><th>Phòng</th><th>Giá vé</th><th></th></tr>
@@ -33,15 +44,16 @@
                 <td th:text="${s.ngayChieu}">2026-07-30</td>
                 <td th:text="${s.gioBatDau}">19:00</td>
                 <td th:text="${s.phongChieu.tenPhong}">Phòng 1</td>
-                <td th:text="${#numbers.formatInteger(s.giaVeMacDinh,0,'POINT')} + ' đ'">80.000 đ</td>
+                <td class="ok" th:text="${#numbers.formatInteger(s.giaVeMacDinh,0,'POINT')} + ' đ'">80.000 đ</td>
                 <td><a class="btn" th:href="@{'/dat-ve/suat-chieu/' + ${s.id} + '/ghe'}">Đặt vé</a></td>
             </tr>
             <tr th:if="${#lists.isEmpty(chiTiet.danhSachSuatChieu)}">
-                <td colspan="5" class="muted">Chưa có suất chiếu.</td>
+                <td colspan="5" class="muted">Chưa có suất chiếu cho phim này.</td>
             </tr>
             </tbody>
         </table>
     </div>
 </main>
+<footer>CineHub · Đặt vé xem phim</footer>
 </body>
 </html>
