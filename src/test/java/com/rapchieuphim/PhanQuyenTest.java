@@ -70,4 +70,17 @@ class PhanQuyenTest {
     void quanLy_cungVaoDuocQuayVe() throws Exception {
         mockMvc.perform(get("/quay/ban-ve/tim-suat-chieu")).andExpect(status().isOk());
     }
+
+    // ===== Tra cuu thanh vien khong ton tai o quay -> khong sap, quay lai buoc thanh toan =====
+
+    @Test
+    @WithMockUser(roles = "BANHANG")
+    void traCuuThanhVienKhongCo_khongSap_hienCanhBao() throws Exception {
+        mockMvc.perform(get("/quay/ban-ve/tra-cuu-thanh-vien")
+                        .param("soDienThoai", "0000000000")
+                        .param("veIds", "1")
+                        .param("tongTien", "100000"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("vãng lai")));
+    }
 }

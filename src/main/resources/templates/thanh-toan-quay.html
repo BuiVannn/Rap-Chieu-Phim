@@ -13,6 +13,10 @@
 <main>
     <h1>Thanh toán tại quầy</h1>
 
+    <div class="notice" th:if="${canhBao}"
+         style="background:rgba(240,166,58,.12);color:#ffcf87;border:1px solid rgba(240,166,58,.3)"
+         th:text="${canhBao}">Cảnh báo</div>
+
     <div class="card">
         <p>Số vé đang giữ: <strong th:text="${#lists.size(veIds)}"></strong></p>
         <p>Tổng tiền: <strong th:text="${#numbers.formatInteger(tongTien,0,'POINT')} + ' đ'"></strong></p>

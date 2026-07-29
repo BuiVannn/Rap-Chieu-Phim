@@ -4,6 +4,7 @@ import com.rapchieuphim.dto.TrangThaiGheDTO;
 import com.rapchieuphim.entity.HoaDon;
 import com.rapchieuphim.entity.KhachHang;
 import com.rapchieuphim.entity.NhanVienBanHang;
+import com.rapchieuphim.exception.KhongTimThayException;
 import com.rapchieuphim.security.TaiKhoanChiTiet;
 import com.rapchieuphim.service.NhanVienBanHangService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -72,11 +73,18 @@ public class BanVeTaiQuayController {
                                   @RequestParam List<Long> veIds,
                                   @RequestParam double tongTien,
                                   Model model) {
-        KhachHang khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
-        model.addAttribute("khachHang", khachHang);
         model.addAttribute("veIds", veIds);
         model.addAttribute("tongTien", tongTien);
-        return "tra-cuu-thanh-vien";
+        try {
+            KhachHang khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
+            model.addAttribute("khachHang", khachHang);
+            return "tra-cuu-thanh-vien";
+        } catch (KhongTimThayException ex) {
+            // Khach vang lai khong co the la binh thuong o quay -> khong bao loi cung, quay lai buoc thanh toan
+            model.addAttribute("canhBao", "Không tìm thấy thành viên với số điện thoại " + soDienThoai
+                    + ". Có thể tiếp tục bán vé cho khách vãng lai (không áp ưu đãi).");
+            return "thanh-toan-quay";
+        }
     }
 
     @PostMapping("/quay/ban-ve/ap-dung-uu-dai")
@@ -84,13 +92,19 @@ public class BanVeTaiQuayController {
                               @RequestParam List<Long> veIds,
                               @RequestParam double tongTien,
                               Model model) {
-        KhachHang khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
-        double tongTienSauUuDai = nhanVienBanHangService.apDungUuDaiThanhVien(khachHang, tongTien);
         model.addAttribute("veIds", veIds);
-        model.addAttribute("tongTien", tongTienSauUuDai);
-        model.addAttribute("soDienThoai", soDienThoai);
-        model.addAttribute("khachHang", khachHang);
-        model.addAttribute("daApDungUuDai", true);
+        try {
+            KhachHang khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
+            double tongTienSauUuDai = nhanVienBanHangService.apDungUuDaiThanhVien(khachHang, tongTien);
+            model.addAttribute("tongTien", tongTienSauUuDai);
+            model.addAttribute("soDienThoai", soDienThoai);
+            model.addAttribute("khachHang", khachHang);
+            model.addAttribute("daApDungUuDai", true);
+        } catch (KhongTimThayException ex) {
+            model.addAttribute("tongTien", tongTien);
+            model.addAttribute("canhBao", "Không tìm thấy thành viên với số điện thoại " + soDienThoai
+                    + ". Có thể tiếp tục bán vé cho khách vãng lai (không áp ưu đãi).");
+        }
         return "thanh-toan-quay";
     }
 
@@ -103,7 +117,11 @@ public class BanVeTaiQuayController {
                                        Model model) {
         KhachHang khachHang = null;
         if (soDienThoai != null && !soDienThoai.isBlank()) {
-            khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
+            try {
+                khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
+            } catch (KhongTimThayException ex) {
+                khachHang = null; // khong tim thay -> ban cho khach vang lai, khong sap
+            }
         }
         // Gan nhan vien ban hang dang dang nhap (neu la NVBH); quan ly ban ho thi de null
         NhanVienBanHang nhanVien = taiKhoan.getNguoiDung() instanceof NhanVienBanHang nvbh ? nvbh : null;
