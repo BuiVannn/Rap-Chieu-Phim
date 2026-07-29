@@ -17,7 +17,7 @@
 </header>
 <main>
     <h1>Vé của tôi</h1>
-    <p class="subtitle">Danh sách vé bạn đã mua. Vé đang ở trạng thái "Đã bán" có thể hủy trong thời hạn.</p>
+    <p class="subtitle">Danh sách vé bạn đã mua. Bấm "Xem vé" để xem vé điện tử (mã QR) và hủy vé nếu cần.</p>
 
     <div class="table-wrap">
         <table>
@@ -37,8 +37,7 @@
                           th:text="${v.trangThai}"></span>
                 </td>
                 <td>
-                    <a th:if="${v.trangThai == 'Đã bán'}" class="btn secondary"
-                       th:href="@{'/ve-cua-toi/' + ${v.id}}">Hủy vé</a>
+                    <a class="btn secondary" th:href="@{'/ve-cua-toi/' + ${v.id}}">Xem vé</a>
                 </td>
             </tr>
             <tr th:if="${#lists.isEmpty(danhSachVe)}">
