@@ -13,6 +13,7 @@
     <a th:href="@{/}">Trang chủ</a>
     <a th:href="@{/phim/tim-kiem}">Phim</a>
     <a sec:authorize="hasRole('KHACHHANG')" th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <a sec:authorize="hasRole('KHACHHANG')" th:href="@{/thanh-vien/the-cua-toi}">Thẻ của tôi</a>
     <a sec:authorize="hasAnyRole('BANHANG','QUANLY')" th:href="@{/quay/ban-ve/tim-suat-chieu}">Quầy vé</a>
     <a sec:authorize="hasRole('QUANLY')" th:href="@{/quan-ly}">Khu quản lý</a>
     <span class="spacer"></span>
@@ -48,9 +49,14 @@
             <h3>Vé của tôi</h3>
             <p>Xem lại vé đã mua và hủy vé trong thời hạn cho phép.</p>
         </a>
+        <a sec:authorize="hasRole('KHACHHANG')" class="card feature" th:href="@{/thanh-vien/the-cua-toi}">
+            <div class="ico">💳</div>
+            <h3>Thẻ thành viên của tôi</h3>
+            <p>Xem mã thẻ, hạng thành viên và mức ưu đãi hiện tại.</p>
+        </a>
         <a sec:authorize="isAnonymous()" class="card feature" th:href="@{/thanh-vien/dang-ky}">
             <div class="ico">💳</div>
-            <h3>Đăng ký thành viên</h3>
+            <h3>Đăng ký thẻ thành viên</h3>
             <p>Tạo tài khoản kèm thẻ thành viên, hưởng ưu đãi theo hạng.</p>
         </a>
         <a sec:authorize="hasAnyRole('BANHANG','QUANLY')" class="card feature" th:href="@{/quay/ban-ve/tim-suat-chieu}">

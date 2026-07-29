@@ -241,6 +241,13 @@ public class KhachHangService {
         emailSmsClient.guiThongBaoHuyVe(email, hoaDon, soTienHoan);
     }
 
+    // ===== UC: Xem thong tin the thanh vien (US-303) =====
+
+    public KhachHang layThongTinTheThanhVien(Long khachHangId) {
+        return khachHangRepository.findById(khachHangId)
+                .orElseThrow(() -> new KhongTimThayException("Khong tim thay khach hang id=" + khachHangId));
+    }
+
     // ===== UC: Dang ky the thanh vien =====
 
     public KhachHang dangKyTheThanhVien(String hoTen, String soDienThoai, String email, String matKhau) {

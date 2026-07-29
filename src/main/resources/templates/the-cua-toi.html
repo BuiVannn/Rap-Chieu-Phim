@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Thẻ thành viên — CineHub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
+    <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <a th:href="@{/thanh-vien/the-cua-toi}">Thẻ của tôi</a>
+    <span class="spacer"></span>
+    <a th:href="@{/dang-xuat}">Đăng xuất</a>
+</header>
+<main style="max-width:560px">
+    <h1>Thẻ thành viên của tôi</h1>
+
+    <div class="card" style="background:linear-gradient(120deg, rgba(244,192,78,.14), rgba(255,91,91,.10))">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start">
+            <div>
+                <div class="muted" style="font-size:12px; letter-spacing:2px; text-transform:uppercase">CineHub Member</div>
+                <h2 style="margin:6px 0" th:text="${khachHang.hoTen}">Họ tên</h2>
+            </div>
+            <span class="badge gold" th:text="${khachHang.hangThanhVien.tenHang}">Thường</span>
+        </div>
+        <div style="font-size:22px; font-weight:800; letter-spacing:2px; margin:10px 0"
+             th:text="${khachHang.theThanhVien.maThe}">TVXXXXXXXX</div>
+        <div class="stat-row">
+            <div class="stat"><div class="k">Ưu đãi</div><div class="v" th:text="${khachHang.hangThanhVien.phanTramUuDai} + '%'">0%</div></div>
+            <div class="stat"><div class="k">Ngày đăng ký</div><div class="v" style="font-size:15px" th:text="${khachHang.theThanhVien.ngayDangKy}"></div></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <p><strong>Email:</strong> <span th:text="${khachHang.email}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${khachHang.soDienThoai}"></span></p>
+        <p class="muted">Xuất trình mã thẻ khi mua vé tại quầy để được áp ưu đãi theo hạng.</p>
+        <a class="btn secondary" th:href="@{/ve-cua-toi}">Xem vé của tôi</a>
+    </div>
+</main>
+<footer>CineHub · Thành viên</footer>
+</body>
+</html>
