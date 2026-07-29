@@ -159,13 +159,11 @@ public class KhachHangService {
         if (ketQua == null || !ketQua.isThanhCong()) {
             throw new ThanhToanThatBaiException("Cong thanh toan tu choi giao dich.");
         }
-
         KhachHang khachHang = null;
         if (khachHangId != null) {
             khachHang = khachHangRepository.findById(khachHangId)
                     .orElseThrow(() -> new KhongTimThayException("Khong tim thay khach hang id=" + khachHangId));
         }
-
         HoaDon hoaDon = new HoaDon();
         hoaDon.setNgayLap(LocalDateTime.now());
         hoaDon.setTongTien(tongTien);
@@ -187,7 +185,6 @@ public class KhachHangService {
         }
         veRepository.saveAll(ves);
         hoaDon.setDanhSachVe(ves);
-
         // Self-call dung Sequence Diagram: sau khi thanh toan thi xuat ve dien tu
         xuatVeDienTu(hoaDon);
         return hoaDon;

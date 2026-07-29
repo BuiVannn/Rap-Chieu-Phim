@@ -98,33 +98,79 @@ public class DataSeeder implements CommandLineRunner {
         kh.setTheThanhVien(the);
         khachHangRepository.save(kh);
 
-        // 4. Phim
-        Phim p1 = luuPhim("Vũ Trụ Song Song", "Khoa học viễn tưởng", 132,
-                "Trần Anh", "Minh Hằng, Quốc Trường", "Đang chiếu", LocalDate.now().minusDays(5));
-        Phim p2 = luuPhim("Bí Ẩn Nửa Đêm", "Kinh dị", 105,
-                "Lê Bình", "Kaity Nguyễn", "Đang chiếu", LocalDate.now().minusDays(2));
-        luuPhim("Hành Tinh Đỏ", "Phiêu lưu", 120,
-                "Phạm Hùng", "Isaac, Diễm My", "Sắp chiếu", LocalDate.now().plusDays(10));
+        // 4. Phim — >= 20 phim (phan lon "Dang chieu" de xep suat, vai phim "Sap chieu")
+        List<Phim> phimDangChieu = new ArrayList<>();
+        phimDangChieu.add(luuPhim("Vũ Trụ Song Song", "Khoa học viễn tưởng", 132, "Trần Anh", "Minh Hằng, Quốc Trường", "Đang chiếu", LocalDate.of(2026, 8, 10)));
+        phimDangChieu.add(luuPhim("Bí Ẩn Nửa Đêm", "Kinh dị", 105, "Lê Bình", "Kaity Nguyễn", "Đang chiếu", LocalDate.of(2026, 8, 12)));
+        phimDangChieu.add(luuPhim("Hành Tinh Đỏ", "Phiêu lưu", 120, "Phạm Hùng", "Isaac, Diễm My", "Đang chiếu", LocalDate.of(2026, 8, 15)));
+        phimDangChieu.add(luuPhim("Đại Dương Sâu Thẳm", "Tài liệu", 96, "Ngô Thanh Vân", "Liên Bỉnh Phát", "Đang chiếu", LocalDate.of(2026, 8, 5)));
+        phimDangChieu.add(luuPhim("Sát Thủ Vô Hình", "Hành động", 118, "Victor Vũ", "Trấn Thành", "Đang chiếu", LocalDate.of(2026, 8, 20)));
+        phimDangChieu.add(luuPhim("Tiếng Gọi Nơi Hoang Dã", "Phiêu lưu", 110, "Charlie Nguyễn", "Ninh Dương Lan Ngọc", "Đang chiếu", LocalDate.of(2026, 8, 8)));
+        phimDangChieu.add(luuPhim("Người Nhện Trở Lại", "Siêu anh hùng", 140, "Jon Watts", "Tom Holland", "Đang chiếu", LocalDate.of(2026, 8, 18)));
+        phimDangChieu.add(luuPhim("Cô Dâu Ma", "Kinh dị", 100, "Trần Hữu Tấn", "Lâm Thanh Mỹ", "Đang chiếu", LocalDate.of(2026, 8, 22)));
+        phimDangChieu.add(luuPhim("Vượt Ngục", "Hành động", 125, "Lý Hải", "Huỳnh Đông", "Đang chiếu", LocalDate.of(2026, 8, 3)));
+        phimDangChieu.add(luuPhim("Nụ Hôn Mùa Hạ", "Lãng mạn", 98, "Nguyễn Quang Dũng", "Diễm My 9x", "Đang chiếu", LocalDate.of(2026, 8, 25)));
+        phimDangChieu.add(luuPhim("Thám Tử Lừng Danh", "Hình sự", 112, "Aoyama Gosho", "Kaito Kid", "Đang chiếu", LocalDate.of(2026, 8, 14)));
+        phimDangChieu.add(luuPhim("Đảo Kinh Hoàng", "Kinh dị", 108, "James Wan", "Vera Farmiga", "Đang chiếu", LocalDate.of(2026, 8, 9)));
+        phimDangChieu.add(luuPhim("Chiến Binh Bóng Đêm", "Siêu anh hùng", 135, "Matt Reeves", "Robert Pattinson", "Đang chiếu", LocalDate.of(2026, 8, 16)));
+        phimDangChieu.add(luuPhim("Cuộc Đua Kỳ Thú", "Hài", 92, "Đức Thịnh", "Thu Trang", "Đang chiếu", LocalDate.of(2026, 8, 26)));
+        phimDangChieu.add(luuPhim("Rồng Thần Trở Lại", "Hoạt hình", 95, "Studio Ghibli", "Lồng tiếng Việt", "Đang chiếu", LocalDate.of(2026, 8, 1)));
+        phimDangChieu.add(luuPhim("Băng Đảng Phố Đông", "Tội phạm", 128, "Ngô Vũ Sâm", "Châu Nhuận Phát", "Đang chiếu", LocalDate.of(2026, 8, 19)));
+        phimDangChieu.add(luuPhim("Giai Điệu Tình Yêu", "Nhạc kịch", 103, "Damien Chazelle", "Emma Stone", "Đang chiếu", LocalDate.of(2026, 8, 11)));
+        phimDangChieu.add(luuPhim("Mật Mã Tử Thần", "Hình sự", 116, "David Fincher", "Brad Pitt", "Đang chiếu", LocalDate.of(2026, 8, 7)));
 
-        // 5. Phong chieu + ghe
-        PhongChieu phong1 = luuPhong("Phòng 1", "2D");
-        PhongChieu phong2 = luuPhong("Phòng 2", "3D");
+        luuPhim("Kỷ Băng Hà 6", "Hoạt hình", 90, "Blue Sky", "Lồng tiếng Việt", "Sắp chiếu", LocalDate.of(2026, 9, 5));
+        luuPhim("Chuyến Tàu Sinh Tử", "Kinh dị", 118, "Yeon Sang-ho", "Gong Yoo", "Sắp chiếu", LocalDate.of(2026, 9, 10));
+        luuPhim("Huyền Thoại Biển Xanh", "Giả tưởng", 122, "Jang Tae-yu", "Lee Min Ho", "Sắp chiếu", LocalDate.of(2026, 9, 12));
+        luuPhim("Đế Chế Sụp Đổ", "Lịch sử", 145, "Ridley Scott", "Russell Crowe", "Sắp chiếu", LocalDate.of(2026, 9, 20));
 
-        // 6. Suat chieu (dat o tuong lai de luon con dat ve duoc khi demo)
-        luuSuat(p1, phong1, LocalDate.now().plusDays(1), LocalTime.of(19, 0), 80000);
-        luuSuat(p1, phong2, LocalDate.now().plusDays(1), LocalTime.of(21, 0), 90000);
-        luuSuat(p2, phong1, LocalDate.now().plusDays(2), LocalTime.of(18, 0), 75000);
+        // 5. Phong chieu + ghe (4 phong, loai khac nhau)
+        List<PhongChieu> phongs = List.of(
+                luuPhong("Phòng 1", "2D"),
+                luuPhong("Phòng 2", "3D"),
+                luuPhong("Phòng 3", "IMAX"),
+                luuPhong("Phòng 4", "2D"));
 
-        // 7. Ky doanh thu thang hien tai (chua chot)
-        LocalDate dauThang = LocalDate.now().withDayOfMonth(1);
-        LocalDate cuoiThang = dauThang.plusMonths(1).minusDays(1);
+        // 6. Suat chieu — >= 30 suat, tat ca tu 30/8/2026 tro di
+        LocalDate ngayBatDau = LocalDate.of(2026, 8, 30);
+        LocalTime[] khungGio = {LocalTime.of(10, 0), LocalTime.of(13, 30), LocalTime.of(17, 0), LocalTime.of(20, 0)};
+        int phimIdx = 0;
+        for (int d = 0; d < 7; d++) {                     // 7 ngay: 30/8 -> 5/9
+            LocalDate ngay = ngayBatDau.plusDays(d);
+            int soSlot = d < 3 ? 2 : 1;                   // 3 ngay dau 2 suat/phong, con lai 1 suat/phong
+            for (int r = 0; r < phongs.size(); r++) {
+                PhongChieu phong = phongs.get(r);
+                for (int s = 0; s < soSlot; s++) {
+                    LocalTime gio = khungGio[(r + s) % khungGio.length];
+                    Phim phim = phimDangChieu.get(phimIdx % phimDangChieu.size());
+                    phimIdx++;
+                    luuSuat(phim, phong, ngay, gio, giaTheoPhong(phong));
+                }
+            }
+        }
+
+        // 7. Ky doanh thu thang 8/2026 (chua chot) — khop moc demo 30/8/2026
+        luuKy(LocalDate.of(2026, 8, 1), LocalDate.of(2026, 8, 31));
+        luuKy(LocalDate.of(2026, 9, 1), LocalDate.of(2026, 9, 30));
+
+        log.info("[Seed] Hoan tat: {} phim, {} suat chieu, {} phong. Tai khoan demo mat khau 123456.",
+                phimRepository.count(), suatChieuRepository.count(), phongs.size());
+    }
+
+    private void luuKy(LocalDate batDau, LocalDate ketThuc) {
         KyDoanhThu ky = new KyDoanhThu();
-        ky.setNgayBatDau(dauThang);
-        ky.setNgayKetThuc(cuoiThang);
+        ky.setNgayBatDau(batDau);
+        ky.setNgayKetThuc(ketThuc);
         ky.setTrangThai("Chưa chốt");
         kyDoanhThuRepository.save(ky);
+    }
 
-        log.info("[Seed] Hoan tat. Tai khoan mau: KH SDT 0900000001, the TVDEMO0001; quan ly id=1.");
+    private double giaTheoPhong(PhongChieu phong) {
+        return switch (phong.getLoaiPhong()) {
+            case "IMAX" -> 130000;
+            case "3D" -> 110000;
+            default -> 85000;
+        };
     }
 
     private HangThanhVien luuHang(String ten, double phanTram) {

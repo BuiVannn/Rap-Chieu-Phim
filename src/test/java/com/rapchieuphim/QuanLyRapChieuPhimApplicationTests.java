@@ -27,8 +27,8 @@ class QuanLyRapChieuPhimApplicationTests {
 
     @Test
     void dataSeederNapDuLieuMau() {
-        // DataSeeder chay luc khoi dong -> phai co 3 phim va 3 suat chieu
-        assertThat(phimRepository.count()).isEqualTo(3);
-        assertThat(suatChieuRepository.count()).isEqualTo(3);
+        // DataSeeder chay luc khoi dong -> it nhat 20 phim va 30 suat chieu
+        assertThat(phimRepository.count()).isGreaterThanOrEqualTo(20);
+        assertThat(suatChieuRepository.count()).isGreaterThanOrEqualTo(30);
     }
 }
