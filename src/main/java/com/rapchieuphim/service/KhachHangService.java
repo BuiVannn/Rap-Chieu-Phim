@@ -200,6 +200,14 @@ public class KhachHangService {
 
     // ===== UC: Huy ve =====
 
+    /**
+     * BO SUNG (ngoai 4.4b): liet ke ve da mua cua mot khach hang, phuc vu man "Ve cua toi".
+     * Kha thi nho co dang nhap — biet duoc khach dang thao tac la ai.
+     */
+    public List<Ve> layVeCuaKhachHang(Long khachHangId) {
+        return veRepository.findByHoaDon_KhachHang_IdOrderByIdDesc(khachHangId);
+    }
+
     public KetQuaKiemTraHuyVeDTO kiemTraDieuKienHuyVe(Long veId) {
         Ve ve = veRepository.findById(veId)
                 .orElseThrow(() -> new KhongTimThayException("Khong tim thay ve id=" + veId));

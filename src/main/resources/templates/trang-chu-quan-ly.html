@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -10,9 +11,11 @@
 <header>
     <span class="brand">🎬 Cine<span class="dot">Hub</span> · Quản lý</span>
     <a th:href="@{/}">Trang khách hàng</a>
-    <span class="spacer"></span>
     <a th:href="@{/quan-ly/lap-lich-chieu}">Lập lịch chiếu</a>
     <a th:href="@{/quan-ly/chot-doanh-thu}">Chốt doanh thu</a>
+    <span class="spacer"></span>
+    <span class="muted" style="font-size:13px">Xin chào, <strong sec:authentication="principal.hoTen">QL</strong></span>
+    <a th:href="@{/dang-xuat}">Đăng xuất</a>
 </header>
 <main>
     <section class="hero">

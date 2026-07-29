@@ -2,17 +2,18 @@ package com.rapchieuphim.controller;
 
 import com.rapchieuphim.dto.KetQuaKiemTraHuyVeDTO;
 import com.rapchieuphim.entity.HoaDon;
+import com.rapchieuphim.security.TaiKhoanChiTiet;
 import com.rapchieuphim.service.KhachHangService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * UC: Huy ve. Chi goi KhachHangService.
- * Demo khong dang nhap: khach nhap ma ve (veId) can huy thay vi liet ke theo tai khoan.
+ * UC: Huy ve + man "Ve cua toi". Chi goi KhachHangService.
+ * Nho co dang nhap, liet ke duoc ve theo khach hang hien tai (thay vi bat nhap ma ve nhu truoc).
  */
 @Controller
 public class HuyVeController {
@@ -24,12 +25,14 @@ public class HuyVeController {
     }
 
     @GetMapping("/ve-cua-toi")
-    public String chonVeCanHuy(@RequestParam(required = false) Long veId, Model model) {
-        if (veId == null) {
-            return "danh-sach-ve-cua-toi";
-        }
-        KetQuaKiemTraHuyVeDTO ketQua = khachHangService.kiemTraDieuKienHuyVe(veId);
-        model.addAttribute("ketQua", ketQua);
+    public String chonVeCanHuy(@AuthenticationPrincipal TaiKhoanChiTiet taiKhoan, Model model) {
+        model.addAttribute("danhSachVe", khachHangService.layVeCuaKhachHang(taiKhoan.getId()));
+        return "danh-sach-ve-cua-toi";
+    }
+
+    @GetMapping("/ve-cua-toi/{veId}")
+    public String xemXacNhanHuy(@PathVariable Long veId, Model model) {
+        model.addAttribute("ketQua", khachHangService.kiemTraDieuKienHuyVe(veId));
         return "xac-nhan-huy-ve";
     }
 

@@ -1,6 +1,8 @@
 package com.rapchieuphim.controller;
 
+import com.rapchieuphim.security.TaiKhoanChiTiet;
 import com.rapchieuphim.service.NhanVienQuanLyService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +38,10 @@ public class ChotDoanhThuController {
     @PostMapping("/quan-ly/chot-doanh-thu/{kyId}/xac-nhan")
     public String xacNhanChotKy(@PathVariable Long kyId,
                                 @RequestParam double soTienThucThu,
-                                @RequestParam Long nhanVienQuanLyId,
+                                @AuthenticationPrincipal TaiKhoanChiTiet taiKhoan,
                                 Model model) {
-        nhanVienQuanLyService.doiChieuVaChotKy(kyId, soTienThucThu, nhanVienQuanLyId);
+        // Nguoi chot la quan ly dang dang nhap (khong con nhap id thu cong)
+        nhanVienQuanLyService.doiChieuVaChotKy(kyId, soTienThucThu, taiKhoan.getId());
         model.addAttribute("kyId", kyId);
         model.addAttribute("soTienThucThu", soTienThucThu);
         return "ket-qua-chot-ky";

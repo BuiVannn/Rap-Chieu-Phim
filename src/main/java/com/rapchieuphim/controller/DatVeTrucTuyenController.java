@@ -3,7 +3,9 @@ package com.rapchieuphim.controller;
 import com.rapchieuphim.dto.ThongTinThanhToanDTO;
 import com.rapchieuphim.dto.TrangThaiGheDTO;
 import com.rapchieuphim.entity.HoaDon;
+import com.rapchieuphim.security.TaiKhoanChiTiet;
 import com.rapchieuphim.service.KhachHangService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,12 +73,13 @@ public class DatVeTrucTuyenController {
     @PostMapping("/dat-ve/thanh-toan")
     public String xacNhanThanhToan(@RequestParam List<Long> veIds,
                                    @RequestParam double tongTien,
-                                   @RequestParam(required = false) Long khachHangId,
                                    @RequestParam(required = false) String phuongThuc,
+                                   @AuthenticationPrincipal TaiKhoanChiTiet taiKhoan,
                                    Model model) {
         ThongTinThanhToanDTO thongTin = new ThongTinThanhToanDTO();
         thongTin.setPhuongThuc(phuongThuc != null ? phuongThuc : "The tin dung");
-        HoaDon hoaDon = khachHangService.xuLyThanhToan(veIds, tongTien, khachHangId, thongTin);
+        // Gan khach hang dang dang nhap vao hoa don (thay vi de null nhu truoc)
+        HoaDon hoaDon = khachHangService.xuLyThanhToan(veIds, tongTien, taiKhoan.getId(), thongTin);
         model.addAttribute("hoaDon", hoaDon);
         return "ket-qua-dat-ve";
     }

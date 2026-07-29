@@ -39,9 +39,8 @@
         <form method="post" th:action="@{'/quan-ly/chot-doanh-thu/' + ${baoCao.kyId} + '/xac-nhan'}">
             <label>Số tiền thực thu (đối chiếu thực tế)</label>
             <input type="number" name="soTienThucThu" step="1000" th:value="${baoCao.tongDoanhThu}"/>
-            <label>ID nhân viên quản lý thực hiện chốt</label>
-            <input type="number" name="nhanVienQuanLyId" value="1" min="1"/>
-            <button class="btn" type="submit" style="margin-top:16px">Xác nhận chốt kỳ</button>
+            <p class="muted" style="margin-top:10px">Người chốt: quản lý đang đăng nhập.</p>
+            <button class="btn" type="submit" style="margin-top:6px">Xác nhận chốt kỳ</button>
         </form>
     </div>
 </main>

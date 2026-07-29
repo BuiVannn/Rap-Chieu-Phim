@@ -8,4 +8,7 @@ import java.util.List;
 public interface VeRepository extends JpaRepository<Ve, Long> {
 
     List<Ve> findBySuatChieuId(Long suatChieuId);
+
+    // Liet ke ve theo khach hang (qua hoa don) — phuc vu man "Ve cua toi"
+    List<Ve> findByHoaDon_KhachHang_IdOrderByIdDesc(Long khachHangId);
 }

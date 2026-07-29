@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -11,43 +12,56 @@
     <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
     <a th:href="@{/phim/tim-kiem}">Phim</a>
-    <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
-    <a th:href="@{/thanh-vien/dang-ky}">Thành viên</a>
+    <a sec:authorize="hasRole('KHACHHANG')" th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <a sec:authorize="hasAnyRole('BANHANG','QUANLY')" th:href="@{/quay/ban-ve/tim-suat-chieu}">Quầy vé</a>
+    <a sec:authorize="hasRole('QUANLY')" th:href="@{/quan-ly}">Khu quản lý</a>
     <span class="spacer"></span>
-    <a th:href="@{/quay/ban-ve/tim-suat-chieu}">Quầy vé</a>
-    <a th:href="@{/quan-ly}">Quản lý</a>
+    <a sec:authorize="isAnonymous()" th:href="@{/dang-nhap}">Đăng nhập</a>
+    <a sec:authorize="isAnonymous()" th:href="@{/thanh-vien/dang-ky}">Đăng ký</a>
+    <span sec:authorize="isAuthenticated()" class="muted" style="font-size:13px">
+        Xin chào, <strong sec:authentication="principal.hoTen">bạn</strong>
+    </span>
+    <a sec:authorize="isAuthenticated()" th:href="@{/dang-xuat}">Đăng xuất</a>
 </header>
 <main>
+    <div class="notice success" th:if="${param.dangxuat}">Bạn đã đăng xuất thành công.</div>
+
     <section class="hero">
         <h1>Đặt vé xem phim chỉ trong vài bước 🍿</h1>
         <p>Chọn phim đang chiếu, giữ ghế yêu thích và thanh toán trực tuyến. Đăng ký thẻ thành viên
            để nhận ưu đãi theo hạng.</p>
         <div class="actions">
-            <a class="btn" th:href="@{/phim/tim-kiem}">🎟️ Đặt vé ngay</a>
-            <a class="btn secondary" th:href="@{/thanh-vien/dang-ky}">Đăng ký thành viên</a>
+            <a class="btn" th:href="@{/phim/tim-kiem}">🎟️ Xem phim &amp; đặt vé</a>
+            <a sec:authorize="isAnonymous()" class="btn secondary" th:href="@{/dang-nhap}">Đăng nhập</a>
+            <a sec:authorize="hasRole('KHACHHANG')" class="btn secondary" th:href="@{/ve-cua-toi}">Vé của tôi</a>
         </div>
     </section>
 
     <div class="grid-features">
         <a class="card feature" th:href="@{/phim/tim-kiem}">
             <div class="ico">🔍</div>
-            <h3>Tìm & đặt vé</h3>
+            <h3>Tìm &amp; đặt vé</h3>
             <p>Duyệt phim đang chiếu, xem suất chiếu và chọn ghế theo sơ đồ.</p>
         </a>
-        <a class="card feature" th:href="@{/ve-cua-toi}">
-            <div class="ico">↩️</div>
-            <h3>Hủy vé</h3>
-            <p>Kiểm tra điều kiện và hủy vé đã đặt, hoàn tiền tự động.</p>
+        <a sec:authorize="hasRole('KHACHHANG')" class="card feature" th:href="@{/ve-cua-toi}">
+            <div class="ico">🎫</div>
+            <h3>Vé của tôi</h3>
+            <p>Xem lại vé đã mua và hủy vé trong thời hạn cho phép.</p>
         </a>
-        <a class="card feature" th:href="@{/thanh-vien/dang-ky}">
+        <a sec:authorize="isAnonymous()" class="card feature" th:href="@{/thanh-vien/dang-ky}">
             <div class="ico">💳</div>
-            <h3>Thẻ thành viên</h3>
-            <p>Đăng ký tài khoản kèm thẻ thành viên, hưởng ưu đãi theo hạng.</p>
+            <h3>Đăng ký thành viên</h3>
+            <p>Tạo tài khoản kèm thẻ thành viên, hưởng ưu đãi theo hạng.</p>
         </a>
-        <a class="card feature" th:href="@{/quay/ban-ve/tim-suat-chieu}">
+        <a sec:authorize="hasAnyRole('BANHANG','QUANLY')" class="card feature" th:href="@{/quay/ban-ve/tim-suat-chieu}">
             <div class="ico">🏪</div>
             <h3>Bán vé tại quầy</h3>
-            <p>Dành cho nhân viên: bán vé nhanh cho khách tại rạp.</p>
+            <p>Bán vé nhanh cho khách trực tiếp tại rạp.</p>
+        </a>
+        <a sec:authorize="hasRole('QUANLY')" class="card feature" th:href="@{/quan-ly}">
+            <div class="ico">🛠️</div>
+            <h3>Khu quản lý</h3>
+            <p>Lập lịch chiếu và chốt doanh thu định kỳ.</p>
         </a>
     </div>
 </main>

@@ -29,6 +29,7 @@ public class DataSeeder implements CommandLineRunner {
     private final KyDoanhThuRepository kyDoanhThuRepository;
     private final KhachHangRepository khachHangRepository;
     private final NhanVienQuanLyRepository nhanVienQuanLyRepository;
+    private final NguoiDungRepository nguoiDungRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataSeeder(HangThanhVienRepository hangThanhVienRepository,
@@ -38,6 +39,7 @@ public class DataSeeder implements CommandLineRunner {
                       KyDoanhThuRepository kyDoanhThuRepository,
                       KhachHangRepository khachHangRepository,
                       NhanVienQuanLyRepository nhanVienQuanLyRepository,
+                      NguoiDungRepository nguoiDungRepository,
                       PasswordEncoder passwordEncoder) {
         this.hangThanhVienRepository = hangThanhVienRepository;
         this.phimRepository = phimRepository;
@@ -46,6 +48,7 @@ public class DataSeeder implements CommandLineRunner {
         this.kyDoanhThuRepository = kyDoanhThuRepository;
         this.khachHangRepository = khachHangRepository;
         this.nhanVienQuanLyRepository = nhanVienQuanLyRepository;
+        this.nguoiDungRepository = nguoiDungRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -71,6 +74,15 @@ public class DataSeeder implements CommandLineRunner {
         quanLy.setMatKhau(passwordEncoder.encode("123456"));
         quanLy.setChucVu("Quản lý rạp");
         nhanVienQuanLyRepository.save(quanLy);
+
+        // 2b. Nhan vien ban hang (dang nhap quay ve)
+        NhanVienBanHang banHang = new NhanVienBanHang();
+        banHang.setHoTen("Lê Bán Hàng");
+        banHang.setSoDienThoai("0912000002");
+        banHang.setEmail("banhang@cgvmini.vn");
+        banHang.setMatKhau(passwordEncoder.encode("123456"));
+        banHang.setChucVu("Nhân viên bán hàng");
+        nguoiDungRepository.save(banHang);
 
         // 3. Khach hang thanh vien mau
         KhachHang kh = new KhachHang();

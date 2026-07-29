@@ -3,7 +3,10 @@ package com.rapchieuphim.controller;
 import com.rapchieuphim.dto.TrangThaiGheDTO;
 import com.rapchieuphim.entity.HoaDon;
 import com.rapchieuphim.entity.KhachHang;
+import com.rapchieuphim.entity.NhanVienBanHang;
+import com.rapchieuphim.security.TaiKhoanChiTiet;
 import com.rapchieuphim.service.NhanVienBanHangService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,14 +99,16 @@ public class BanVeTaiQuayController {
                                        @RequestParam double tongTien,
                                        @RequestParam(required = false) String soDienThoai,
                                        @RequestParam(required = false, defaultValue = "Tiền mặt") String hinhThucThanhToan,
+                                       @AuthenticationPrincipal TaiKhoanChiTiet taiKhoan,
                                        Model model) {
         KhachHang khachHang = null;
         if (soDienThoai != null && !soDienThoai.isBlank()) {
             khachHang = nhanVienBanHangService.traCuuTheThanhVien(soDienThoai);
         }
-        // Demo khong dang nhap: nhan vien ban hang de null (hoa don cho phep null)
+        // Gan nhan vien ban hang dang dang nhap (neu la NVBH); quan ly ban ho thi de null
+        NhanVienBanHang nhanVien = taiKhoan.getNguoiDung() instanceof NhanVienBanHang nvbh ? nvbh : null;
         HoaDon hoaDon = nhanVienBanHangService.xuLyThanhToanTaiQuay(
-                veIds, tongTien, khachHang, null, hinhThucThanhToan);
+                veIds, tongTien, khachHang, nhanVien, hinhThucThanhToan);
         return "redirect:/quay/ban-ve/in-hoa-don/" + hoaDon.getId();
     }
 

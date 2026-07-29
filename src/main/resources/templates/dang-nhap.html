@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Đăng nhập — CineHub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<header>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
+    <a th:href="@{/}">Trang chủ</a>
+    <span class="spacer"></span>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
+</header>
+<main style="max-width:440px">
+    <h1>Đăng nhập</h1>
+    <p class="subtitle">Đăng nhập để sử dụng chức năng theo vai trò của bạn.</p>
+
+    <div class="notice success" th:if="${param.dangxuat}">Bạn đã đăng xuất.</div>
+    <p class="err" th:if="${param.loi}">Email hoặc mật khẩu không đúng.</p>
+
+    <div class="card">
+        <form method="post" th:action="@{/dang-nhap}">
+            <label>Email</label>
+            <input type="email" name="email" required autofocus placeholder="vd: khachhang@gmail.com"/>
+            <label>Mật khẩu</label>
+            <input type="password" name="matKhau" required placeholder="••••••"/>
+            <button class="btn block" type="submit" style="margin-top:16px">Đăng nhập</button>
+        </form>
+        <p class="muted" style="margin-top:14px">
+            Chưa có tài khoản? <a th:href="@{/thanh-vien/dang-ky}">Đăng ký thẻ thành viên</a>
+        </p>
+    </div>
+
+    <div class="card">
+        <p class="muted" style="margin:0 0 8px"><strong>Tài khoản demo</strong> (mật khẩu: <code>123456</code>)</p>
+        <table>
+            <tr><th>Vai trò</th><th>Email</th></tr>
+            <tr><td>Khách hàng</td><td>khachhang@gmail.com</td></tr>
+            <tr><td>Nhân viên bán hàng</td><td>banhang@cgvmini.vn</td></tr>
+            <tr><td>Nhân viên quản lý</td><td>quanly@cgvmini.vn</td></tr>
+        </table>
+    </div>
+</main>
+<footer>CineHub · Hệ thống quản lý rạp chiếu phim</footer>
+</body>
+</html>

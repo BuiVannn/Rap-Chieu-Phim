@@ -2,25 +2,52 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Vé của tôi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Vé của tôi — CineHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <header>
-    <span class="brand">🎬 CGV Mini</span>
+    <span class="brand">🎬 Cine<span class="dot">Hub</span></span>
     <a th:href="@{/}">Trang chủ</a>
+    <a th:href="@{/phim/tim-kiem}">Phim</a>
     <a th:href="@{/ve-cua-toi}">Vé của tôi</a>
+    <span class="spacer"></span>
+    <a th:href="@{/dang-xuat}">Đăng xuất</a>
 </header>
 <main>
-    <h1>Hủy vé đã đặt</h1>
-    <div class="card">
-        <p class="muted">Nhập mã vé (in trên vé điện tử / hóa đơn) để kiểm tra điều kiện hủy.</p>
-        <form method="get" th:action="@{/ve-cua-toi}">
-            <label>Mã vé</label>
-            <input type="number" name="veId" min="1" placeholder="VD: 1"/>
-            <button class="btn" type="submit">Kiểm tra</button>
-        </form>
+    <h1>Vé của tôi</h1>
+    <p class="subtitle">Danh sách vé bạn đã mua. Vé đang ở trạng thái "Đã bán" có thể hủy trong thời hạn.</p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr><th>Mã vé</th><th>Phim</th><th>Suất chiếu</th><th>Ghế</th><th>Giá</th><th>Trạng thái</th><th></th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="v : ${danhSachVe}">
+                <td th:text="'#' + ${v.id}"></td>
+                <td th:text="${v.suatChieu.phim.tenPhim}"></td>
+                <td th:text="${v.suatChieu.ngayChieu} + ' ' + ${v.suatChieu.gioBatDau}"></td>
+                <td th:text="${v.ghe.soGhe}"></td>
+                <td th:text="${#numbers.formatInteger(v.giaVeApDung,0,'POINT')} + ' đ'"></td>
+                <td>
+                    <span class="badge"
+                          th:classappend="${v.trangThai == 'Đã bán'} ? 'green' : (${v.trangThai == 'Đã hủy'} ? 'red' : 'amber')"
+                          th:text="${v.trangThai}"></span>
+                </td>
+                <td>
+                    <a th:if="${v.trangThai == 'Đã bán'}" class="btn secondary"
+                       th:href="@{'/ve-cua-toi/' + ${v.id}}">Hủy vé</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(danhSachVe)}">
+                <td colspan="7" class="muted">Bạn chưa mua vé nào. <a th:href="@{/phim/tim-kiem}">Đặt vé ngay</a>.</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
+<footer>CineHub · Đặt vé xem phim</footer>
 </body>
 </html>
